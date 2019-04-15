@@ -19,9 +19,20 @@ src="..\Images\Logo.png" alt="HTML5 Icon" style="width:auto;height:75px;">
   <div class="header">
   	<h2>Login</h2>
   </div>
-	 
+  
   <form method="post" action="login1.php">
   	<?php include('errors.php'); ?>
+	<?php
+	if (isset($_GET['purchasingvid']))
+	{
+		$vid = $_GET['purchasingvid'];
+		
+	}
+	else
+	{
+		$vid = $_GET['vid'];
+	}
+	?>
   	<div class="input-group">
   		<label>Username</label>
   		<input type="text" name="username" >
@@ -31,10 +42,10 @@ src="..\Images\Logo.png" alt="HTML5 Icon" style="width:auto;height:75px;">
   		<input type="password" name="password">
   	</div>
   	<div class="input-group">
-  		<button type="submit" class="btn" name="purchase_user">Login</button>
+		<?php echo '<button name="purchase_user" type="submit" value='.$vid.'>Login</button>';?>
   	</div>
   	<p>
-  		 Not yet a member? <a href="register.php">Sign up</a>
+  		 Not yet a member? <?php echo '<a href="register1.php?value='.$vid.'">Sign up</a>';?>
   	</p>
 	</form>
 </body>

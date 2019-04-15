@@ -1,16 +1,6 @@
 <?php include('server.php') ?>
 <!DOCTYPE html>
 <html>
-<div class="dealer-logo">
-<center>
-<img class="dealer-logo" 
-src="..\Images\Logo.png" alt="HTML5 Icon" style="width:auto;height:75px;"> 
-<img src="..\Images\Name.png" alt="HTML5 Icon" style="display:inline-block;width:auto;height:75px;" > 
-</center>
-</div>
-<div class="navbar">
- <a class="active" href="#"></a>
-</div>
 <head>
   <title>Registration system PHP and MySQL</title>
   <link rel="stylesheet" type="text/css" href="style.css">

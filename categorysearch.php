@@ -4,12 +4,10 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <head>
 <style>
-table, th, td {
+table, td, th {
     border: 1px solid black;
+	  border-collapse: collapse;
 }
-</style>
-</head>
-<style>
 body {font-family: Arial, Helvetica, sans-serif;}
 .navbar {
   width: 100%;
@@ -53,8 +51,8 @@ body {font-family: Arial, Helvetica, sans-serif;}
      height: 30px;
      width: 500px;
 }
-
 </style>
+</head>
 <body>
 <div class="dealer-logo">
 <center>
@@ -66,19 +64,13 @@ src="..\Images\Logo.png" alt="HTML5 Icon" style="width:auto;height:75px;">
 <div class="navbar">
  <a class="active" href="#">Your Search Results</a>
 </div>
-
-</html>
-
 <?php
-
 session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "cardealership";
-
 // Create connection
-
 $connection = mysqli_connect($servername, $username, $password, $dbname) or die("Connection failed");
 	   
                if (isset($_POST['condition']) && isset($_POST['make']) && isset($_POST['model']) && isset($_POST['color']) && isset($_POST['pricerange']))
@@ -174,9 +166,8 @@ $connection = mysqli_connect($servername, $username, $password, $dbname) or die(
 				  
 			echo "</td>";
 			
-			echo '<td><input type="button" value="purchase" onClick=window.open("login1.php");></td>';
-
-
+			echo '<td> <form action="login1.php" method="get">';
+            echo '<button name="purchasingvid" type="submit" value='.$row["vehicle_id"].'>Purchase</button> </form> </td>';
     
 			
 			echo "</tr>";
@@ -195,3 +186,5 @@ $connection = mysqli_connect($servername, $username, $password, $dbname) or die(
                }	
                }
  ?>
+</body>
+</html>

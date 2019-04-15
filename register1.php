@@ -10,7 +10,7 @@
   	<h2>Register</h2>
   </div>
 	
-  <form method="post" action="register.php">
+  <form method="post" action="register1.php">
   	<?php include('errors.php'); ?>
 		<div class="input-group">
   	  <label>First Name</label>
@@ -22,7 +22,7 @@
   	</div>
 	<div class="input-group">
   	  <label>Date Of Birth</label>
-  	  <input type="date" name="DOB" value="<?php echo $DOB; ?>" max="<?php date("m/d/Y"); ?>">
+  	  <input type="text" name="DOB" value="<?php echo $DOB; ?>">
   	</div>
 	<div class="input-group">
   	  <label>SSN</label>
@@ -46,10 +46,15 @@
 	  <input type="password" name="password_2">
   	</div>
   	<div class="input-group">
-  	  <button type="submit" class="btn" name="reg_user">Register</button>
+	<?php  if (isset($_GET['value']))
+	{
+		$vid = $_GET['value'];
+		
+	}
+	  echo '<button name="purchas_user" class="btn" type="submit" value='.$vid.'>Register</button>';?>
   	</div>
   	<p>
-  		Already a member? <a href="login.php">Sign in</a>
+  		Already a member? <a href="login1.php">Sign in</a>
   	</p>
   </form>
 </body>

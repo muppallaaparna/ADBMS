@@ -1,3 +1,6 @@
+<?php 
+  session_start(); 
+ ?>
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Load an icon library -->
@@ -7,6 +10,7 @@
 table, th, td {
     border: 0.5px solid #92a8d1;
 	text-align: left;
+	  border-collapse: collapse;
 }
 </style>
 </head>
@@ -53,7 +57,6 @@ body {font-family: Arial, Helvetica, sans-serif;}
      height: 30px;
      width: 500px;
 }
-
 </style>
 <body>
 <div class="dealer-logo">
@@ -66,118 +69,100 @@ src="..\Images\Logo.png" alt="HTML5 Icon" style="width:auto;height:75px;">
 <center>
 <div class="navbar">
  <a class="active" href="#">Place your Order here</a>
- </div>
+ </div><br>
 
-<form method="post" action="purchase.php">
-<table>
+<?php echo '<form method="post" action="purchase.php?vid='.$_GET['vid'].'">';?>
 <center>
-<td>
-
-    <div class="row">
-  <div class="col-75">
-    <div class="container">
-      <form action="/action_page.php">
-
-        <div class="row">
-          <div class="col-50">
-            <label for="purchaseid"> purchaseid</label><br></br>
-            <input type="text" id="purchaseid" name="purchaseid" ><br></br
-            <label for="vehicleid"> Vehicle Id</label><br></br>
-            <input type="text" id="vehicle_id" name="vehicle_id" ><br></br>
-			
-			<label for="purchasedate"> purchasedate</label><br></br>
-            <input type="date" id="purchasedate" name="purchasedate" ><br></br>
-            
-			<h3>provide Billing Address</h3>
-            <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
-            <input type="text" id="adr" name="address" ><br><br></br>
-            <label for="city"><i class="fa fa-institution"></i> City</label>
-            <input type="text" id="city" name="city" ><br><br></br>
-
-            <div class="row">
-              <div class="col-50">
-                <label for="state">State</label>
-                <input type="text" id="state" name="state" ><br></br>
-              </div>
-              <div class="col-50">
-                <label for="zip">Zip</label>
-                <input type="text" id="zip" name="zip" ><br></br>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-50">
+<table>
+<td>	
+           Price: <input type="text" id="price" name="pricerange" ><br></br>
+		   Vehicle Id: <input name="vehicleid" value=<?php echo $_GET['vid'];?>><br></br>
+		   Customer Name: <input name="username" value=<?php  if (isset($_SESSION['username'])) : ?>
+          '<?php echo $_SESSION['username']; ?>'
+           <?php endif ?></input><br><br>
+           <!Purchasedate: <input type="date" id="purchasedate" name="purchasedate" >
+		   Purchasedate:<input type="text" value="<?php echo date("m/d/Y"); ?>" id="purchasedate" name="purchasedate">
+			<h3>Provide Billing Address</h3>
+            <label for="adr"><i class="fa fa-address-card-o"></i>Address: </label>
+            <input type="text" id="adr" name="address" ><br><br>
+            <label for="city"><i class="fa fa-institution"></i>City: </label>
+            <input type="text" id="city" name="city" ><br><br>
+         State: <input type="text" id="state" name="state" ><br></br>
+          Zip: <input type="text" id="zip" name="zip" ><br></br>
             <h3>Payment</h3>
             <label for="fname">Accepted Cards</label>
-            <div class="icon-container">
+              <div class="icon-container">
               <i class="fa fa-cc-visa" style="color:navy;"></i>
               <i class="fa fa-cc-amex" style="color:blue;"></i>
               <i class="fa fa-cc-mastercard" style="color:red;"></i>
               <i class="fa fa-cc-discover" style="color:orange;"></i>
             </div>
-            <label for="cname">Name on Card</label><br></br>
-            <input type="text" id="cname" name="cardname" ><br></br>
-            <label for="ccnum">Credit card number</label><br></br>
-            <input type="text" id="ccnum" name="cardnumber" ><br></br>
-            <label for="expmonth">Exp Month</label><br></br>
-            <input type="text" id="expmonth" name="expmonth" ><br></br>
-
-            <div class="row">
-              <div class="col-50">
-                <label for="expyear">Exp Year</label>
-                <input type="text" id="expyear" name="expyear" ><br></br>
-              </div>
-              <div class="col-50">
-                <label for="cvv">CVV</label>
-                <input type="text" id="cvv" name="cvv" >
-              </div>
-            </div>
-          </div>
-
-        </div>
-        <label>
-          <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
-        </label><br>
-        <input type="submit" value="confirm your payment" class="btn">
-      </form>
-    </div>
-  </div>
-
-  
-
+         Name on Card: <input type="text" id="cname" name="cardname" ><br></br>
+   Credit card number: <input type="tel" id="ccnum" name="cardnumber"  maxlength="16"><br></br>
+            Exp Month: <input type="text" id="expmonth" name="expmonth" ><br></br>
+             Exp Year: <input type="tel" id="expyear" name="expyear"  maxlength="4"><br></br>
+               CVV: <input type="password" id="cvv" name="cvv" maxlength="4"><br><br>
+        <center><input type="submit" value="confirm your payment" class="btn"></center>
 	</td>
+    </table>
 	</center>
-	</table>
-	
 	</form>
 </body>
 </html>
 <?php
-
-session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "cardealership";
 
 // Create connection
-$connection = mysqli_connect($servername, $username, $password, $dbname) or die("Connection failed");
-if (isset($_POST['purchaseid']) && isset($_POST['vehicle_id']) && isset($_POST['address']) && isset($_POST['city']) && isset($_POST['state'] && isset($_POST['zip'] && isset($_POST['cardname'] && isset($_POST['expmonth'] && isset($_POST['CVV']))
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+if (isset($_POST['pricerange']) && 
+isset($_POST['vehicleid']) && 
+isset($_POST['username']) &&
+isset($_POST['purchasedate']) && 
+isset($_POST['address']) &&
+ isset($_POST['city']) &&
+ isset($_POST['state']) &&
+ isset($_POST['zip']) && 
+ isset($_POST['cardname']) && 
+  isset($_POST['cardnumber']) && 
+ isset($_POST['expmonth']) && 
+  isset($_POST['expyear']) && 
+ isset($_POST['cvv']))
                {
-               $purchaseid = $_POST['purchaseid'];
-			   $vehicle_id = $_POST['vehicle_id'];
-			   $address = $_POST['address'];
-			   $price = $_POST['pricerange'];
+			   $pricerange = $_POST['pricerange'];
+			   $vehicleid = $_POST['vehicleid'];
+			   $username = $_POST['username'];
+               $purchasedate = $_POST['purchasedate'];
+			   $address = $_POST['address'];			  
 			   $city = $_POST['city'];
 			   $state = $_POST['state'];
 			   $zip = $_POST['zip'];
 			   $cardname = $_POST['cardname'];
+			   $cardnumber = $_POST['cardnumber'];
 			   $expmonth = $_POST['expmonth'];
-			   $CVV = $_POST['CVV'];
-			    if (empty($purchaseid)) echo "purchaseid is required");
-				}
+			   $expyear = $_POST['expyear'];
+			   $cvv = $_POST['cvv'];
+			   
+			   $sql = "INSERT INTO purchase(pricerange,vehicle_id,username,purchasedate,address,city,state,zip,cardname,cardnumber,expmonth,expyear,cvv) 
+               VALUES('$pricerange','$vehicleid','$username','$purchasedate','$address','$city','$state','$zip','$cardname','$cardnumber','$expmonth','$expyear','$cvv')";
 			   
 
-
-	
+   if ($conn->query($sql) === TRUE) {
+    echo "Your purchase has been made successfully";
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+}
+	}
+	else
+	{
+   echo "<br><h2><center></center></h2>";
+	}
+			  
+	?> 
 
